@@ -97,6 +97,8 @@ int medebug_probe (struct pci_dev *dev, const struct pci_device_id *id)
 		cdev_init(&me_dev_file, &medebug_fops);
 		if (cdev_add(&me_dev_file, me_dev, 1) == -1)
 			goto err_cdev;
+	} else {
+		printk(KERN_INFO "medebug: probe: Failed to locate Damagement Engine\n");
 	}
 	return err;
 err_cdev:
