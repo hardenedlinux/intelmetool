@@ -19,10 +19,7 @@
  * MA 02110-1301 USA
  */
 
-#include <stdio.h>
 #include "me.h"
-
-#define ARRAY_SIZE(a) (sizeof(a) / sizeof(a[0]))
 
 /* HFS1[3:0] Current Working State Values */
 static const char *me_cws_values[] = {
@@ -146,65 +143,65 @@ static const char *me_progress_policy_values[] = {
 void intel_me_status(uint32_t hfs, uint32_t gmes)
 {
 	/* Check Current States */
-	printf("ME: FW Partition Table      : %s\n",
+	printk(KERN_INFO "ME: FW Partition Table      : %s\n",
 	       ((hfs & 0x20) >> 5) ? "BAD" : "OK");
-	printf("ME: Bringup Loader Failure  : %s\n",
+	printk(KERN_INFO "ME: Bringup Loader Failure  : %s\n",
 	       ((hfs & 0x400) >> 10) ? "YES" : "NO");
-	printf("ME: Firmware Init Complete  : %s\n",
+	printk(KERN_INFO "ME: Firmware Init Complete  : %s\n",
 	       ((hfs & 0x200) >> 9) ? "YES" : "NO");
-	printf("ME: Manufacturing Mode      : %s\n",
+	printk(KERN_INFO "ME: Manufacturing Mode      : %s\n",
 	       ((hfs & 0x10) >> 4) ? "YES" : "NO");
-	printf("ME: Boot Options Present    : %s\n",
+	printk(KERN_INFO "ME: Boot Options Present    : %s\n",
 	       ((hfs & 0x1000000) >> 24) ? "YES" : "NO");
-	printf("ME: Update In Progress      : %s\n",
+	printk(KERN_INFO "ME: Update In Progress      : %s\n",
 	       ((hfs & 0x800) >> 11) ? "YES" : "NO");
-	printf("ME: Current Working State   : %s\n",
+	printk(KERN_INFO "ME: Current Working State   : %s\n",
 	       me_cws_values[hfs & 0xf]);
-	printf("ME: Current Operation State : %s\n",
+	printk(KERN_INFO "ME: Current Operation State : %s\n",
 	       me_opstate_values[(hfs & 0x1c0) >> 6]);
-	printf("ME: Current Operation Mode  : %s\n",
+	printk(KERN_INFO "ME: Current Operation Mode  : %s\n",
 	       me_opmode_values[(hfs & 0xf0000) >> 16]);
-	printf("ME: Error Code              : %s\n",
+	printk(KERN_INFO "ME: Error Code              : %s\n",
 	       me_error_values[(hfs & 0xf000) >> 12]);
-	printf("ME: Progress Phase          : %s\n",
+	printk(KERN_INFO "ME: Progress Phase          : %s\n",
 	       me_progress_values[(gmes & 0xf0000000) >> 28]);
-	printf("ME: Power Management Event  : %s\n",
+	printk(KERN_INFO "ME: Power Management Event  : %s\n",
 	       me_pmevent_values[(gmes & 0xf000000) >> 24]);
 
-	printf("ME: Progress Phase State    : ");
+	printk(KERN_INFO "ME: Progress Phase State    : ");
 	switch ((gmes & 0xf0000000) >> 28) {
 	case ME_GMES_PHASE_ROM:		/* ROM Phase */
-		printf("%s",
+		printk(KERN_INFO "%s",
 		       me_progress_rom_values[(gmes & 0xff0000) >> 16]);
 		break;
 
 	case ME_GMES_PHASE_BUP:		/* Bringup Phase */
 		if ((gmes & 0xff0000) >> 16 < ARRAY_SIZE(me_progress_bup_values)
 		    && me_progress_bup_values[(gmes & 0xff0000) >> 16])
-			printf("%s",
+			printk(KERN_INFO "%s",
 			       me_progress_bup_values[(gmes & 0xff0000) >> 16]);
 		else
-			printf("0x%02x", (gmes & 0xff0000) >> 16);
+			printk(KERN_INFO "0x%02x", (gmes & 0xff0000) >> 16);
 		break;
 
 	case ME_GMES_PHASE_POLICY:	/* Policy Module Phase */
 		if ((gmes & 0xff0000) >> 16 < ARRAY_SIZE(me_progress_policy_values)
 		    && me_progress_policy_values[(gmes & 0xff0000) >> 16])
-			printf("%s",
+			printk(KERN_INFO "%s",
 			       me_progress_policy_values[(gmes & 0xff0000) >> 16]);
 		else
-			printf("0x%02x", (gmes & 0xff0000) >> 16);
+			printk(KERN_INFO "0x%02x", (gmes & 0xff0000) >> 16);
 		break;
 
 	case ME_GMES_PHASE_HOST:	/* Host Communication Phase */
 		if (!((gmes & 0xff0000) >> 16))
-			printf("Host communication established");
+			printk(KERN_INFO "Host communication established");
 		else
-			printf("0x%02x", (gmes & 0xff0000) >> 16);
+			printk(KERN_INFO "0x%02x", (gmes & 0xff0000) >> 16);
 		break;
 
 	default:
-		printf("Unknown 0x%02x", (gmes & 0xff0000) >> 16);
+		printk(KERN_INFO "Unknown 0x%02x", (gmes & 0xff0000) >> 16);
 	}
-	printf("\n");
+	printk(KERN_INFO "\n");
 }

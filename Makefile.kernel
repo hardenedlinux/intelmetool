@@ -1,4 +1,5 @@
-obj-m += medebug.o
+me-debug-objs := me.o me_status.o medebug.o
+obj-m += me-debug.o
 
 all:
 	make -C /lib/modules/$(shell uname -r)/build M=$(PWD) modules
