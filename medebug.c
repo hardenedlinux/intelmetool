@@ -23,6 +23,7 @@ MODULE_DESCRIPTION("Damagement Engine debug driver");
 static int oldarc = 0;
 dev_t me_dev;
 struct cdev me_dev_file;
+struct class *me_cl;
 
 module_param(oldarc, int, 0000);
 MODULE_PARM_DESC(oldarc, "If set to 1, assume 1.5MB Damagement Engine firmware");
@@ -88,7 +89,6 @@ struct file_operations medebug_fops = {
 int medebug_probe (struct pci_dev *dev, const struct pci_device_id *id)
 {
 	int err;
-	struct class *me_cl;
 
 	err = pci_enable_device(dev);
 	if (!err) {
@@ -145,6 +145,7 @@ void medebug_remove (struct pci_dev *dev)
 {
 	cdev_del(&me_dev_file);
 	unregister_chrdev_region(me_dev, 1);
+	class_destroy(me_cl);
 }
 
 static struct pci_driver medebug_driver = {
