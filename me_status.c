@@ -140,35 +140,35 @@ static const char *me_progress_policy_values[] = {
 	[0x10] = "Required VSCC values for flash parts do not match",
 };
 
-void intel_me_status(uint32_t hfs, uint32_t gmes)
+void intel_me_status(struct pci_dev *dev, uint32_t hfs, uint32_t gmes)
 {
 	/* Check Current States */
-	printk(KERN_INFO "ME: FW Partition Table      : %s\n",
+	printk(KERN_INFO "medebug: FW Partition Table      : %s\n",
 	       ((hfs & 0x20) >> 5) ? "BAD" : "OK");
-	printk(KERN_INFO "ME: Bringup Loader Failure  : %s\n",
+	printk(KERN_INFO "medebug: Bringup Loader Failure  : %s\n",
 	       ((hfs & 0x400) >> 10) ? "YES" : "NO");
-	printk(KERN_INFO "ME: Firmware Init Complete  : %s\n",
+	printk(KERN_INFO "medebug: Firmware Init Complete  : %s\n",
 	       ((hfs & 0x200) >> 9) ? "YES" : "NO");
-	printk(KERN_INFO "ME: Manufacturing Mode      : %s\n",
+	printk(KERN_INFO "medebug: Manufacturing Mode      : %s\n",
 	       ((hfs & 0x10) >> 4) ? "YES" : "NO");
-	printk(KERN_INFO "ME: Boot Options Present    : %s\n",
+	printk(KERN_INFO "medebug: Boot Options Present    : %s\n",
 	       ((hfs & 0x1000000) >> 24) ? "YES" : "NO");
-	printk(KERN_INFO "ME: Update In Progress      : %s\n",
+	printk(KERN_INFO "medebug: Update In Progress      : %s\n",
 	       ((hfs & 0x800) >> 11) ? "YES" : "NO");
-	printk(KERN_INFO "ME: Current Working State   : %s\n",
+	printk(KERN_INFO "medebug: Current Working State   : %s\n",
 	       me_cws_values[hfs & 0xf]);
-	printk(KERN_INFO "ME: Current Operation State : %s\n",
+	printk(KERN_INFO "medebug: Current Operation State : %s\n",
 	       me_opstate_values[(hfs & 0x1c0) >> 6]);
-	printk(KERN_INFO "ME: Current Operation Mode  : %s\n",
+	printk(KERN_INFO "medebug: Current Operation Mode  : %s\n",
 	       me_opmode_values[(hfs & 0xf0000) >> 16]);
-	printk(KERN_INFO "ME: Error Code              : %s\n",
+	printk(KERN_INFO "medebug: Error Code              : %s\n",
 	       me_error_values[(hfs & 0xf000) >> 12]);
-	printk(KERN_INFO "ME: Progress Phase          : %s\n",
+	printk(KERN_INFO "medebug: Progress Phase          : %s\n",
 	       me_progress_values[(gmes & 0xf0000000) >> 28]);
-	printk(KERN_INFO "ME: Power Management Event  : %s\n",
+	printk(KERN_INFO "medebug: Power Management Event  : %s\n",
 	       me_pmevent_values[(gmes & 0xf000000) >> 24]);
 
-	printk(KERN_INFO "ME: Progress Phase State    : ");
+	printk(KERN_INFO "medebug: Progress Phase State    : ");
 	switch ((gmes & 0xf0000000) >> 28) {
 	case ME_GMES_PHASE_ROM:		/* ROM Phase */
 		printk(KERN_INFO "%s",

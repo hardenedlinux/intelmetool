@@ -403,15 +403,13 @@ struct me_debug_mem {
         __u32 me_size;
 } __attribute__ ((packed));
 
-void intel_me_status(__u32 hfs, __u32 gmes);
-void mkhi_thermal(void);
+void intel_me_status(struct pci_dev *dev, __u32 hfs, __u32 gmes);
+void mkhi_thermal(struct pci_dev *dev);
 __u32 intel_mei_setup(struct pci_dev *dev);
-void intel_mei_unmap(void);
-int mkhi_get_fwcaps(void);
-int mkhi_get_fw_version(void);
-int mkhi_debug_me_memory(void *addr);
-void mei_reset(void);
-void udelay(__u32 usecs);
+int mkhi_get_fwcaps(struct pci_dev *dev);
+int mkhi_get_fw_version(struct pci_dev *dev);
+int mkhi_debug_me_memory(struct pci_dev *dev, void *addr);
+void mei_reset(struct pci_dev *dev);
 int intel_me_extend_valid(struct pci_dev *dev);
 
 #endif

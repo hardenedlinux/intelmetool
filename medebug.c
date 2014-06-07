@@ -7,6 +7,7 @@
 #include <linux/moduleparam.h>
 #include <linux/kernel.h>
 #include <linux/init.h>
+#include <linux/delay.h>
 #include <linux/stat.h>
 #include <linux/pci.h>
 #include <linux/sysfs.h>
@@ -107,25 +108,25 @@ int medebug_probe (struct pci_dev *dev, const struct pci_device_id *id)
 		printk(KERN_INFO "medebug: probe: Initialising HECI\n");
 
 		intel_mei_setup(dev);
-        	udelay(1000);
+        	//udelay(1000);
 
 		// Reset
-        	mei_reset();
-        	udelay(10000);
+        	mei_reset(dev);
+        	//udelay(10000);
 
 		// Get version to kernel log
 		printk(KERN_INFO "medebug: probe: Get version\n");
-        	mkhi_get_fw_version();
-        	udelay(10000);
+        	mkhi_get_fw_version(dev);
+        	//udelay(10000);
 
 		// Reset
-        	mei_reset();
-        	udelay(10000);
+        	mei_reset(dev);
+        	//udelay(10000);
 
 		// Get firmware capability to kernel log
 		printk(KERN_INFO "medebug: probe: Get fw capabilities\n");
-       		mkhi_get_fwcaps();
-        	udelay(10000);
+       		mkhi_get_fwcaps(dev);
+        	//udelay(10000);
 	} else {
 		printk(KERN_INFO "medebug: probe: failed (%d)\n", err);
 	}
