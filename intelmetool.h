@@ -1,22 +1,25 @@
 /*
- * intelmetool
+ * Copyright (C) 2015 Damien Zammit
  *
+ * This file was created by examining "inteltool" and categorizing chipsets
+ * by noticing that the Southbridge/LPC device identifies the chipset.
+ * All PCI IDs in this file should refer to a Southbridge/LPC device.
+ * It forms most of the detection logic of intelmetool and is subject to
+ * additions or improvements when new information is available.
+ *
+ * Original coreboot "inteltool" work done by:
  * Copyright (C) 2008-2010 by coresystems GmbH
  * Copyright (C) 2009 Carl-Daniel Hailfinger
- * Copyright (C) 2015 Damien Zammit
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; version 2 of the License.
+ * the Free Software Foundation; either version 2 of the License
+ * or (at your option) any later version.
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
 #define ME_NOT_PRESENT 0
@@ -169,9 +172,57 @@
 #define PCI_DEVICE_ID_INTEL_Q87			0x8c4e
 #define PCI_DEVICE_ID_INTEL_H87			0x8c4a
 #define PCI_DEVICE_ID_INTEL_Z87			0x8c44
-#define PCI_DEVICE_ID_INTEL_SUNRISE		0x9d3a
-#define PCI_DEVICE_ID_INTEL_SUNRISE_H1		0xa13a
-#define PCI_DEVICE_ID_INTEL_SUNRISE_H2		0xa13b
+#define PCI_DEVICE_ID_INTEL_WILDCAT_LP1		0x9cc1
+#define PCI_DEVICE_ID_INTEL_WILDCAT_LP2		0x9cc2
+#define PCI_DEVICE_ID_INTEL_WILDCAT_LP3		0x9cc3
+#define PCI_DEVICE_ID_INTEL_WILDCAT_LP4		0x9cc5
+#define PCI_DEVICE_ID_INTEL_WILDCAT_LP5		0x9cc6
+#define PCI_DEVICE_ID_INTEL_WILDCAT_LP6		0x9cc7
+#define PCI_DEVICE_ID_INTEL_WILDCAT_LP7		0x9cc9
+#define PCI_DEVICE_ID_INTEL_SUNRISE_LP1		0x9d43
+#define PCI_DEVICE_ID_INTEL_SUNRISE_LP2		0x9d48
+#define PCI_DEVICE_ID_INTEL_SUNRISE_LP3		0x9d4e
+#define PCI_DEVICE_ID_INTEL_SUNRISE_LP4		0x9d56
+#define PCI_DEVICE_ID_INTEL_SUNRISE_LP5		0x9d58
+#define PCI_DEVICE_ID_INTEL_SUNRISE_H0		0xa140
+#define PCI_DEVICE_ID_INTEL_SUNRISE_H1		0xa141
+#define PCI_DEVICE_ID_INTEL_SUNRISE_H2		0xa142
+#define PCI_DEVICE_ID_INTEL_SUNRISE_H3		0xa143
+#define PCI_DEVICE_ID_INTEL_SUNRISE_H4		0xa144
+#define PCI_DEVICE_ID_INTEL_SUNRISE_H5		0xa145
+#define PCI_DEVICE_ID_INTEL_SUNRISE_H6		0xa146
+#define PCI_DEVICE_ID_INTEL_SUNRISE_H7		0xa147
+#define PCI_DEVICE_ID_INTEL_SUNRISE_H8		0xa148
+#define PCI_DEVICE_ID_INTEL_SUNRISE_H9		0xa149
+#define PCI_DEVICE_ID_INTEL_SUNRISE_H10		0xa14a
+#define PCI_DEVICE_ID_INTEL_SUNRISE_H11		0xa14b
+#define PCI_DEVICE_ID_INTEL_SUNRISE_H12		0xa14c
+#define PCI_DEVICE_ID_INTEL_SUNRISE_H13		0xa14d
+#define PCI_DEVICE_ID_INTEL_SUNRISE_H14		0xa14e
+#define PCI_DEVICE_ID_INTEL_SUNRISE_H15		0xa14f
+#define PCI_DEVICE_ID_INTEL_SUNRISE_H16		0xa150
+#define PCI_DEVICE_ID_INTEL_SUNRISE_H17		0xa151
+#define PCI_DEVICE_ID_INTEL_SUNRISE_H18		0xa152
+#define PCI_DEVICE_ID_INTEL_SUNRISE_H19		0xa153
+#define PCI_DEVICE_ID_INTEL_SUNRISE_H20		0xa154
+#define PCI_DEVICE_ID_INTEL_SUNRISE_H21		0xa155
+#define PCI_DEVICE_ID_INTEL_SUNRISE_H22		0xa156
+#define PCI_DEVICE_ID_INTEL_SUNRISE_H23		0xa157
+#define PCI_DEVICE_ID_INTEL_SUNRISE_H24		0xa158
+#define PCI_DEVICE_ID_INTEL_SUNRISE_H25		0xa159
+#define PCI_DEVICE_ID_INTEL_SUNRISE_H26		0xa15a
+#define PCI_DEVICE_ID_INTEL_SUNRISE_H27		0xa15b
+#define PCI_DEVICE_ID_INTEL_SUNRISE_H28		0xa15c
+#define PCI_DEVICE_ID_INTEL_SUNRISE_H29		0xa15d
+#define PCI_DEVICE_ID_INTEL_SUNRISE_H30		0xa15e
+#define PCI_DEVICE_ID_INTEL_SUNRISE_H31		0xa15f
+#define PCI_DEVICE_ID_INTEL_LEWISBURG_1		0xa1c1
+#define PCI_DEVICE_ID_INTEL_LEWISBURG_2		0xa1c2
+#define PCI_DEVICE_ID_INTEL_LEWISBURG_3		0xa1c3
+#define PCI_DEVICE_ID_INTEL_LEWISBURG_4		0xa1c4
+#define PCI_DEVICE_ID_INTEL_LEWISBURG_5		0xa1c5
+#define PCI_DEVICE_ID_INTEL_LEWISBURG_6		0xa1c6
+#define PCI_DEVICE_ID_INTEL_LEWISBURG_7		0xa1c7
 
 #define PCI_DEV_HAS_ME_DIFFICULT(x) ( \
 	( (x) == PCI_DEVICE_ID_INTEL_ICH10R ) || \
@@ -232,9 +283,57 @@
 	( (x) == PCI_DEVICE_ID_INTEL_Q87 ) || \
 	( (x) == PCI_DEVICE_ID_INTEL_H87 ) || \
 	( (x) == PCI_DEVICE_ID_INTEL_Z87 ) || \
-	( (x) == PCI_DEVICE_ID_INTEL_SUNRISE ) || \
+	( (x) == PCI_DEVICE_ID_INTEL_WILDCAT_LP1 ) || \
+	( (x) == PCI_DEVICE_ID_INTEL_WILDCAT_LP2 ) || \
+	( (x) == PCI_DEVICE_ID_INTEL_WILDCAT_LP3 ) || \
+	( (x) == PCI_DEVICE_ID_INTEL_WILDCAT_LP4 ) || \
+	( (x) == PCI_DEVICE_ID_INTEL_WILDCAT_LP5 ) || \
+	( (x) == PCI_DEVICE_ID_INTEL_WILDCAT_LP6 ) || \
+	( (x) == PCI_DEVICE_ID_INTEL_WILDCAT_LP7 ) || \
+	( (x) == PCI_DEVICE_ID_INTEL_SUNRISE_LP1 ) || \
+	( (x) == PCI_DEVICE_ID_INTEL_SUNRISE_LP2 ) || \
+	( (x) == PCI_DEVICE_ID_INTEL_SUNRISE_LP3 ) || \
+	( (x) == PCI_DEVICE_ID_INTEL_SUNRISE_LP4 ) || \
+	( (x) == PCI_DEVICE_ID_INTEL_SUNRISE_LP5 ) || \
+	( (x) == PCI_DEVICE_ID_INTEL_SUNRISE_H0 ) || \
 	( (x) == PCI_DEVICE_ID_INTEL_SUNRISE_H1 ) || \
 	( (x) == PCI_DEVICE_ID_INTEL_SUNRISE_H2 ) || \
+	( (x) == PCI_DEVICE_ID_INTEL_SUNRISE_H3 ) || \
+	( (x) == PCI_DEVICE_ID_INTEL_SUNRISE_H4 ) || \
+	( (x) == PCI_DEVICE_ID_INTEL_SUNRISE_H5 ) || \
+	( (x) == PCI_DEVICE_ID_INTEL_SUNRISE_H6 ) || \
+	( (x) == PCI_DEVICE_ID_INTEL_SUNRISE_H7 ) || \
+	( (x) == PCI_DEVICE_ID_INTEL_SUNRISE_H8 ) || \
+	( (x) == PCI_DEVICE_ID_INTEL_SUNRISE_H9 ) || \
+	( (x) == PCI_DEVICE_ID_INTEL_SUNRISE_H10 ) || \
+	( (x) == PCI_DEVICE_ID_INTEL_SUNRISE_H11 ) || \
+	( (x) == PCI_DEVICE_ID_INTEL_SUNRISE_H12 ) || \
+	( (x) == PCI_DEVICE_ID_INTEL_SUNRISE_H13 ) || \
+	( (x) == PCI_DEVICE_ID_INTEL_SUNRISE_H14 ) || \
+	( (x) == PCI_DEVICE_ID_INTEL_SUNRISE_H15 ) || \
+	( (x) == PCI_DEVICE_ID_INTEL_SUNRISE_H16 ) || \
+	( (x) == PCI_DEVICE_ID_INTEL_SUNRISE_H17 ) || \
+	( (x) == PCI_DEVICE_ID_INTEL_SUNRISE_H18 ) || \
+	( (x) == PCI_DEVICE_ID_INTEL_SUNRISE_H19 ) || \
+	( (x) == PCI_DEVICE_ID_INTEL_SUNRISE_H20 ) || \
+	( (x) == PCI_DEVICE_ID_INTEL_SUNRISE_H21 ) || \
+	( (x) == PCI_DEVICE_ID_INTEL_SUNRISE_H22 ) || \
+	( (x) == PCI_DEVICE_ID_INTEL_SUNRISE_H23 ) || \
+	( (x) == PCI_DEVICE_ID_INTEL_SUNRISE_H24 ) || \
+	( (x) == PCI_DEVICE_ID_INTEL_SUNRISE_H25 ) || \
+	( (x) == PCI_DEVICE_ID_INTEL_SUNRISE_H26 ) || \
+	( (x) == PCI_DEVICE_ID_INTEL_SUNRISE_H27 ) || \
+	( (x) == PCI_DEVICE_ID_INTEL_SUNRISE_H28 ) || \
+	( (x) == PCI_DEVICE_ID_INTEL_SUNRISE_H29 ) || \
+	( (x) == PCI_DEVICE_ID_INTEL_SUNRISE_H30 ) || \
+	( (x) == PCI_DEVICE_ID_INTEL_SUNRISE_H31 ) || \
+	( (x) == PCI_DEVICE_ID_INTEL_LEWISBURG_1 ) || \
+	( (x) == PCI_DEVICE_ID_INTEL_LEWISBURG_2 ) || \
+	( (x) == PCI_DEVICE_ID_INTEL_LEWISBURG_3 ) || \
+	( (x) == PCI_DEVICE_ID_INTEL_LEWISBURG_4 ) || \
+	( (x) == PCI_DEVICE_ID_INTEL_LEWISBURG_5 ) || \
+	( (x) == PCI_DEVICE_ID_INTEL_LEWISBURG_6 ) || \
+	( (x) == PCI_DEVICE_ID_INTEL_LEWISBURG_7 ) || \
 	0)
 
 // Not sure if ME present, but should be able to disable it easily

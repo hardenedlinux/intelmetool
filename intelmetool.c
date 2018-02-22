@@ -3,7 +3,8 @@
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; version 2 of the License.
+ * the Free Software Foundation; either version 2 of the License,
+ * or (at your option), any later version.
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -224,6 +225,13 @@ int main(void)
 				case 0x9D3A:  /* Sunrise Point-LP */
 				case 0xA13A:  /* Sunrise Point-H #1 */
 				case 0xA13B:  /* Sunrise Point-H #2 */
+				case 0xA13E:  /* Sunrise Point-H #3 */
+				case 0xA1BA:  /* CSME Lewisburg #1 */
+				case 0xA1BB:  /* CSME Lewisburg #2 */
+				case 0xA1BE:  /* CSME Lewisburg #3 */
+				case 0xA1F8:  /* IE Lewisburg #1 */
+				case 0xA1F9:  /* IE Lewisburg #2 */
+				case 0xA1FC:  /* IE Lewisburg #3 */
 					me = 1;
 					break;
 				default:
