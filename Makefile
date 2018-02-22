@@ -1,6 +1,7 @@
 CC= gcc
 CFLAGS= -Wall -O0 -g
 LIBS= -lpci
+DESTDIR= /usr/local/bin/
 
 INCLUDES= -I.
 
@@ -23,6 +24,9 @@ $(TARGET): $(OBJS)
 
 .c.o:
 	$(CC) $(CFLAGS) $(INCLUDES) -c $<  -o $@
+
+install: 
+	cp -t $(DESTDIR) $(TARGET)
 
 clean:
 	rm $(TARGET) *.o

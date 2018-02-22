@@ -20,3 +20,8 @@ Interesting to compare output with and without partially removing ME with
 make
 sudo ./intelmetool
 ```
+
+Or optional, install it with:
+```
+sudo make install
+```
